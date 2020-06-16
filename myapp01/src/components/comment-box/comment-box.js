@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MyProps from '../my-props/my-props';
 
-
+//stateless component :::::: because we don't have state involved.
 class  CommentBox extends Component{
     render(){
         let  status = "empty" ;
