@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import MyUser from '../../data/myuser';
 import User from '../user/user';
-
+import GenericComponent from '../generic/generic-comp';
 
 class MyProps extends Component {
             render() {
@@ -10,6 +10,8 @@ class MyProps extends Component {
                 return <div>
                     JS is {this.props.name}
                     <User user={MyUser}/>
+                    {/* <GenericComponent/> */}
+                    <GenericComponent things="cadbury"/>
                 </div>;
             }
         }

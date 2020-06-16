@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import MyProps from '../my-props/my-props';
+
+
 class  CommentBox extends Component{
     render(){
         let  status = "empty" ;
