@@ -9,5 +9,9 @@ localhost:3000
 
 
 npm run eject // will show u all the hidden libraries
+
+
+
+npm install react-router-dom // install router
     
     

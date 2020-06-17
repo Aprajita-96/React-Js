@@ -1,0 +1,105 @@
+// state.reducer 
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redux </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+   
+    <style>
+         div {margin: 3em;}
+    </style>
+
+  </head>
+  <body>
+
+    <h1>Redux</h1>
+    <p>See console</p>
+
+    
+    <script>
+    
+        const ADD_TODO = 'ADD_TODO';
+        const COMPLETE_TODO = 'COMPLETE_TODO';
+        const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+
+        const VisibilityFilters = {
+          SHOW_ALL: 'SHOW_ALL',
+          SHOW_COMPLETED: 'SHOW_COMPLETED',
+          SHOW_ACTIVE: 'SHOW_ACTIVE',
+        };
+        // actions object creation 
+        const addTodo = (text) => {
+          return { type: ADD_TODO, text };
+        };
+
+        const completeTodo = (index) => {
+          return { type: COMPLETE_TODO, index };
+        };
+
+        const setVisibilityFilter = (filter) => {
+          return { type: SET_VISIBILITY_FILTER, filter };
+        };
+
+        // reducer ::: which dispatches the state
+        const todos = (state = [], action) => {
+          switch (action.type) {
+            case ADD_TODO:
+              return [
+                ...state, // balance state array objects attached.(spread operator)
+                {
+                  text: action.text,
+                  completed: false
+                }
+              ];
+            case COMPLETE_TODO:
+              return [
+                ...state.slice(0, action.index),
+                Object.assign({}, state[action.index], {
+                  completed: true
+                }),
+                ...state.slice(action.index + 1)
+              ];
+            default:
+              return state;
+          }
+        };
+        //reducer 
+        const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
+          switch (action.type) {
+            case SET_VISIBILITY_FILTER:
+              return action.filter;
+            default:
+              return state;
+          }
+        };
+        //combining reducer (todos-reducer + visibilityFilter-reducer)
+        const todoApp = (state = {}, action) => {  
+          return {
+            visibilityFilter: visibilityFilter(state.visibilityFilter, action),
+            todos: todos(state.todos, action)
+          };
+        };
+
+
+
+        const store = Redux.createStore(todoApp);
+
+        store.subscribe(() => {
+          console.log(store.getState());
+        });
+
+        store.dispatch(addTodo('Learn about actions'));
+        store.dispatch(addTodo('Learn about reducers'));
+        store.dispatch(addTodo('Learn about store'));
+        store.dispatch(completeTodo(0));
+        store.dispatch(completeTodo(1));
+        store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
+
+    </script>  
+    
+  </body>
+</html>
